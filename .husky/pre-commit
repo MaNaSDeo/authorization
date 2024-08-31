@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname "$0")/h"
 
-npx lint-staged && yarn run type-check && yarn run build
+# npx lint-staged && yarn run type-check && yarn run build
+yarn validate
