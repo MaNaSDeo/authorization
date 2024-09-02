@@ -1,0 +1,65 @@
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  .btnContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.4rem;
+    margin-top: 0.5rem;
+
+    .formBtn {
+      width: 150px;
+      cursor: pointer;
+      padding: 0.25rem 1.75rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      border: 1px solid darkgray;
+      border-radius: 0.5rem;
+      flex: 1;
+    }
+    .authBtn {
+      width: 150px;
+      cursor: pointer;
+      padding: 0.25rem 1.75rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      border: 1px solid darkgray;
+      border-radius: 0.5rem;
+      flex: 1;
+    }
+  }
+}
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  .inputLabel {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+  .inputBox {
+    border-radius: 0.5rem;
+    min-width: 325px;
+    min-height: 2.5rem;
+    font-size: 1.2rem;
+    border: 1px solid darkgray;
+    padding: 0 0.75rem;
+    font-weight: 350;
+  }
+  .inputBox::placeholder {
+    padding-left: 0rem;
+  }
+  .inputError {
+    color: red;
+    margin-top: 0.25rem;
+    margin-bottom: -0.5rem;
+  }
+}

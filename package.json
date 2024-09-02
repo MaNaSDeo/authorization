@@ -9,8 +9,11 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "prettier": "prettier --write",
+    "format": "prettier \"{app,components,models,styles,types,utils}/**/*.{ts,tsx,js,json}\" --ignore-path .gitignore",
+    "format:check": "pnpm format --check",
+    "format:write": "pnpm format --write",
     "prepare": "husky install",
-    "validate": "npx lint-staged && yarn type-check && yarn build"
+    "validate": "yarn format:write && yarn tsc && yarn build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -25,10 +28,14 @@
     ]
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.0",
     "next": "14.2.7",
     "next-auth": "^4.24.7",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.53.0"
   },
   "devDependencies": {
     "@types/node": "^20",
