@@ -2,6 +2,9 @@ import User from "@/models/User.model";
 import { connectToDB } from "@/utils/db";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+
+const saltRound = 10;
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -17,10 +20,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       );
     }
 
-    let newUser;
-    if (password === confirmPassword) {
-      newUser = new User({ username, email, password });
-    } else {
+    if (password !== confirmPassword) {
       return NextResponse.json(
         {
           message: "Passwords don't match",
@@ -29,6 +29,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
       );
     }
 
+    const hashPassword = await bcrypt.hash(password, saltRound);
+    const newUser = new User({ username, email, password: hashPassword });
     await newUser.save();
 
     return NextResponse.json(

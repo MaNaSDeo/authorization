@@ -17,10 +17,10 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: [true, "Pasword is required!"],
-    match: [
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i,
-      "Password invalid, it should contain 8-20 alphanumeric letters and be unique!",
-    ],
+    // match: [
+    //   /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i,
+    //   "Password invalid, it should contain 8-20 alphanumeric letters and be unique!",
+    // ],
   },
 });
 
