@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import styles from "./Login.module.css";
@@ -59,10 +59,37 @@ function Login() {
     },
     mode: "onBlur",
   });
+  const [userData, setUserData] = useState<IFormInputs | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  console.log("userData", userData);
 
-  const onSubmit: SubmitHandler<IFormInputs> = (data) => {
-    console.log({ data });
+  const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
+    const { username, email, password } = data;
+    console.log({ username, email, password });
+    setUserData(data);
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Registration failed");
+      }
+
+      const result = await response.json();
+
+      setUserData(result.data);
+      setError(null);
+    } catch (error) {
+      console.error("Registration error web: ", error);
+      setError("Registration failed.Please try again.");
+    }
   };
+
   const password = watch("password");
 
   return (
@@ -70,7 +97,14 @@ function Login() {
       <Input
         name="username"
         control={control}
-        rules={{ required: "Username is required!" }}
+        rules={{
+          required: "Username is required!",
+          pattern: {
+            value: /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
+            message:
+              "Username invalid, it should contain 8-20 alphanumeric letters and be unique!",
+          },
+        }}
         label="Username"
       />
       <Input
@@ -93,6 +127,8 @@ function Login() {
           pattern: {
             value:
               /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i,
+            message:
+              "Password invalid, it should contain 8-20 alphanumeric letters and be unique!",
           },
         }}
         label="Password"
